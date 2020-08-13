@@ -52,15 +52,26 @@ class SocialGraph:
 
         # Create friendships
         import random
-        all_friendships = []
-        for i in range(num_users - 1):
-            for j in range(i+1, num_users):
-                all_friendships.append([i+1,j+1]) 
+        # all_friendships = []
+        # for i in range(num_users - 1):
+        #     for j in range(i+1, num_users):
+        #         all_friendships.append([i+1,j+1]) 
         
-        random.shuffle(all_friendships)
+        # random.shuffle(all_friendships)
         
-        for i in range(num_users * avg_friendships // 2):
-            self.add_friendship(all_friendships[i][0], all_friendships[i][1])
+        # for i in range(num_users * avg_friendships // 2):
+        #     self.add_friendship(all_friendships[i][0], all_friendships[i][1])
+        friendships = []
+        for i in range(1, num_users+1):
+            r1 = random.randint(1, num_users)
+            while r1 == i or (r1,i) in friendships or (i,r1) in friendships:
+                r1 = random.randint(1, num_users)
+            friendships.append((i,r1))
+        
+        print('Here', friendships)
+        for pair in friendships:
+            self.add_friendship(pair[0],pair[1])
+            
 
 
     def get_all_social_paths(self, user_id, visited=None):
@@ -100,5 +111,5 @@ if __name__ == '__main__':
     sg = SocialGraph()
     sg.populate_graph(10, 2)
     print(sg.friendships)
-    connections = sg.get_all_social_paths(1)
-    print(connections)
+    # connections = sg.get_all_social_paths(1)
+    # print(connections)
